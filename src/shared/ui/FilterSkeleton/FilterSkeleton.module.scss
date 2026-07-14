@@ -1,0 +1,48 @@
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@mixin skeleton-block {
+  background: linear-gradient(90deg, #e8e8e8 25%, #f0f0f0 50%, #e8e8e8 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeletonTitle {
+  width: 120px;
+  height: 20px;
+  border-radius: 4px;
+  @include skeleton-block;
+}
+
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.skeletonButton {
+  min-width: 80px;
+  height: 36px;
+  border-radius: 12px;
+  @include skeleton-block;
+}
+
+.skeletonToggle {
+  width: 100px;
+  height: 20px;
+  margin-top: 4px;
+  border-radius: 4px;
+  @include skeleton-block;
+}

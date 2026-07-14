@@ -1,0 +1,96 @@
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #e8e8e8;
+	margin-bottom: 15px;
+}
+
+.title {
+	font-weight: 500;
+	font-size: 24px;
+	line-height: 120%;
+	color: #191919;
+	margin: 0;
+}
+
+.filterButton {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: transparent;
+	padding: 8px;
+	border: 1px solid #e8e8e8;
+	border-radius: 8px;
+	cursor: pointer;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	align-self: flex-start;
+	border-radius: 24px;
+	padding: 24px 20px 40px;
+	max-width: 804px;
+	width: 100%;
+	box-shadow: 0 4px 10px 0 rgba(106, 99, 118, 0.1);
+	background: #fff;
+	gap: 24px;
+
+	@include media($lg) {
+		max-width: none;
+		padding: 24px 16px 40px;
+	}
+}
+
+.sidebar {
+	align-self: flex-start;
+	position: sticky;
+	top: 20px;
+	right: 0;
+	width: 392px;
+	padding: 24px;
+	border-radius: 24px;
+	background: #fff;
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+
+	@include media($lg) {
+		display: none;
+	}
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeletonTitle {
+  width: 280px;
+  height: 28px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #e8e8e8 25%, #f0f0f0 50%, #e8e8e8 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeletonFilterButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #e8e8e8 25%, #f0f0f0 50%, #e8e8e8 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeletonPagination {
+  width: 280px;
+  height: 28px;
+  border-radius: 8px;
+  margin: 0 auto;
+  background: linear-gradient(90deg, #e8e8e8 25%, #f0f0f0 50%, #e8e8e8 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}

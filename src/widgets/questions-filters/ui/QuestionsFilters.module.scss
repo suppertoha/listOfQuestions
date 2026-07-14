@@ -1,0 +1,12 @@
+.card {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 8px;
+	margin-bottom: 10px;
+}
+
+.title {
+	font-size: 14px;
+	color: #474747;
+}

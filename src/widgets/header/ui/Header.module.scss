@@ -1,0 +1,214 @@
+.wrapper {
+  position: relative;
+  z-index: 5;
+  background: $bg-white;
+  border-bottom: 1px solid $border-light;
+  padding: 7px 0;
+}
+
+.inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.block {
+  display: flex;
+  align-items: center;
+  gap: 52px;
+
+  @include media($xl) {
+    gap: 20px;
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.text {
+  display: block;
+
+  @include media($sm) {
+    display: none;
+  }
+}
+
+.navigation {
+  @include media($lg) {
+    display: none;
+  }
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  gap: 21px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.listItem {
+  font-size: 16px;
+  font-weight: 500;
+  color: $text-primary;
+  border-radius: 12px;
+  padding: 6px 10px;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f8f8f8;
+    color: $accent;
+  }
+}
+
+.mobileMenu {
+  display: none;
+  position: relative;
+
+  @include media($lg) {
+    display: block;
+  }
+}
+
+.dropdown {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: $text-primary;
+
+  svg {
+    color: #303030;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.mobileList {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 200px;
+  position: absolute;
+  left: -10px;
+  top: 44px;
+  z-index: 2;
+  border-radius: 0 0 6px 6px;
+  overflow: hidden;
+  padding: 6px;
+  box-shadow: 0 0 10px -2px #0000001f;
+  background-color: #fff;
+
+  @include media($xl) {
+    top: 36px;
+  }
+}
+
+.authorizationMobile {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 176px;
+  position: absolute;
+  right: 0;
+  top: 40px;
+  z-index: 2;
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px -2px #0000001f;
+  padding: 10px;
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.active,
+.activeBurger {
+  opacity: 1;
+  visibility: visible;
+}
+
+.authorization {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+
+  @include media($lg) {
+    display: none;
+  }
+}
+
+.btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.accent {
+  font-weight: 600;
+  color: $accent;
+}
+
+.primary {
+  width: 170px;
+  height: 48px;
+  background-color: $accent;
+  color: $bg-white;
+  font-weight: 500;
+  border-radius: 12px;
+}
+
+.button {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.burger {
+  display: none;
+  position: relative;
+
+  @include media($lg) {
+    display: block;
+  }
+}
+
+.toggleButton {
+  display: flex;
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+
+  svg {
+    width: 32px;
+    height: 32px;
+    color: $accent;
+  }
+}

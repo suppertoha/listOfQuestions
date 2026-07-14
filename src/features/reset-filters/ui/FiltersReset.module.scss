@@ -1,0 +1,15 @@
+.resetBtn {
+  border: 1px solid #6a0bff;
+  border-radius: 12px;
+  padding: 10px 16px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6a0bff;
+  margin-top: 16px;
+
+  &:hover {
+    background-color: rgb(240 231 255 / 50%);
+  }
+}

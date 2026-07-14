@@ -1,0 +1,62 @@
+.page {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+}
+
+.backBtn {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 0;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	font-weight: 500;
+	font-size: 16px;
+	color: #6a0bff;
+
+	svg {
+		width: 16px;
+		height: 16px;
+	}
+}
+
+.content {
+	display: flex;
+	justify-content: space-between;
+	gap: 24px;
+}
+
+.main {
+	flex-grow: 1;
+	min-width: 0;
+}
+
+.sidebar,
+.sidebarColumn {
+	align-self: flex-start;
+	position: sticky;
+	top: 20px;
+	width: 392px;
+	flex-shrink: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+
+	@include media($lg) {
+		width: 328px;
+	}
+}
+
+.sidebarColumn {
+	position: static;
+	width: 100%;
+}
+
+.error {
+	padding: 24px;
+	border-radius: 16px;
+	background: #fff;
+	color: #dc2626;
+}
