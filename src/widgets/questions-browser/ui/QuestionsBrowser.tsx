@@ -1,15 +1,12 @@
 import { useEffect } from "react";
-import { Navigate } from "react-router-dom";
 import { QuestionList, useFetchQuestionsQuery } from "@/entities/question";
 import { useFetchSpecializationsQuery } from "@/entities/specialization";
 import FilterButton from "@/shared/assets/icons/filter-button.svg?react";
 import { useFilters } from "@/features/filter-questions";
 import { FiltersReset } from "@/features/reset-filters";
-import { ROUTES } from "@/shared/config";
 import { Pagination } from "@/shared/ui";
 import { QuestionsBrowserSkeleton } from "./QuestionsBrowserSkeleton";
 import styles from "./QuestionsBrowser.module.scss";
-
 interface QuestionsBrowserProps {
   isMobile: boolean;
   openSidebar: () => void;
@@ -28,6 +25,7 @@ export const QuestionsBrowser = ({
     page,
     changePage,
     status,
+    resetFilters,
   } = useFilters();
 
   const { data: specializationsResponse } = useFetchSpecializationsQuery();
@@ -81,6 +79,14 @@ export const QuestionsBrowser = ({
     );
   }
 
+  if (!data) {
+    return (
+      <div className={styles.error}>
+        Не удалось загрузить вопросы. Попробуйте позже.
+      </div>
+    );
+  }
+
   const questions = data.data;
   const totalPages = Math.ceil(data.total / data.limit);
   const isEmpty = questions.length === 0;
@@ -108,7 +114,11 @@ export const QuestionsBrowser = ({
         )}
       </div>
 
-      {isEmpty ? <FiltersReset /> : <QuestionList questions={questions} />}
+      {isEmpty ? (
+        <FiltersReset onReset={resetFilters} />
+      ) : (
+        <QuestionList questions={questions} />
+      )}
 
       {!isEmpty && (
         <Pagination

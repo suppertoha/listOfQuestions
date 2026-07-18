@@ -118,7 +118,6 @@ export const useQuestionNavigation = (questionId: number) => {
   ]);
 
   const goNext = useCallback(async () => {
-    // ЗАЩИТА: Блокируем клик, если кнопка заблокирована или уже идет запрос
     if (!hasNext || isNavigating) return;
 
     if (currentIndex < questions.length - 1) {

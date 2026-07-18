@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/shared/config";
-import notFoundImage from "@/shared/assets/images/not_found.svg";
+import notFoundImage from "@/shared/assets/images/not_found.png";
 import styles from "./Page.module.scss";
 
 export const NotFound = () => {

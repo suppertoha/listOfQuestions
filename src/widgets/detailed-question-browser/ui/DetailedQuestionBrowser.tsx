@@ -1,5 +1,5 @@
 import type { Question } from "@/entities/question";
-import defaultImage from "@/shared/assets/images/detailsDefault.svg";
+import defaultImage from "@/shared/assets/images/detailsDefault.png";
 import FilterButton from "@/shared/assets/icons/filter-button.svg?react";
 import ArrowLeft from "@/shared/assets/icons/arrow-left.svg?react";
 import ArrowRight from "@/shared/assets/icons/arrow-right.svg?react";
@@ -11,6 +11,7 @@ interface DetailedQuestionBrowserProps {
   openSidebar: () => void;
   hasPrev: boolean;
   hasNext: boolean;
+  isNavigating?: boolean;
   onPrev: () => void;
   onNext: () => void;
 }
@@ -21,6 +22,7 @@ export const DetailedQuestionBrowser = ({
   openSidebar,
   hasPrev,
   hasNext,
+  isNavigating = false,
   onPrev,
   onNext,
 }: DetailedQuestionBrowserProps) => {
@@ -59,7 +61,7 @@ export const DetailedQuestionBrowser = ({
             type="button"
             className={styles.navBtn}
             onClick={onPrev}
-            disabled={!hasPrev}
+            disabled={!hasPrev || isNavigating}
           >
             <ArrowLeft />
             <span>Предыдущий</span>
@@ -68,7 +70,7 @@ export const DetailedQuestionBrowser = ({
             type="button"
             className={styles.navBtn}
             onClick={onNext}
-            disabled={!hasNext}
+            disabled={!hasNext || isNavigating}
           >
             <span>Следующий</span>
             <ArrowRight />

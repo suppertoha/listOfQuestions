@@ -3,7 +3,6 @@ import { QuestionsBrowser } from "@/widgets/questions-browser";
 import { QuestionsFilters } from "@/widgets/questions-filters";
 import { useBodyScrollLock } from "@/shared/hooks/useBodyScrollLock";
 import { useCheckMobile } from "@/shared/hooks/useCheckMobile";
-import { useClickOutside } from "@/shared/hooks/useClickOutside";
 import { CloseButton, Drawer } from "@/shared/ui";
 import styles from "./Page.module.scss";
 
@@ -21,7 +20,6 @@ export const Questions = () => {
   useBodyScrollLock(isSidebarOpen && isMobile);
 
   const openSidebar = () => setIsSidebarOpen(true);
-  const drawerRef = useClickOutside(closeSidebar);
 
   return (
     <section className={styles.page}>
@@ -30,7 +28,7 @@ export const Questions = () => {
       </main>
 
       {isMobile ? (
-        <Drawer ref={drawerRef} isSidebarOpen={isSidebarOpen}>
+        <Drawer isSidebarOpen={isSidebarOpen} onClose={closeSidebar}>
           <CloseButton onClose={closeSidebar} />
           <QuestionsFilters />
         </Drawer>

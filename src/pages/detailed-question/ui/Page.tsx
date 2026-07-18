@@ -37,7 +37,7 @@ export const DetailedQuestion = () => {
     skip: !id || Number.isNaN(questionId),
   });
 
-  const { hasPrev, hasNext, goPrev, goNext } =
+  const { hasPrev, hasNext, goPrev, goNext, isNavigating } =
     useQuestionNavigation(questionId);
 
   useEffect(() => {
@@ -73,13 +73,18 @@ export const DetailedQuestion = () => {
             openSidebar={openSidebar}
             hasPrev={hasPrev}
             hasNext={hasNext}
+            isNavigating={isNavigating}
             onPrev={goPrev}
             onNext={goNext}
           />
         </main>
 
         {isMobile ? (
-          <Drawer ref={drawerRef} isSidebarOpen={isSidebarOpen}>
+          <Drawer
+            ref={drawerRef}
+            isSidebarOpen={isSidebarOpen}
+            onClose={closeSidebar}
+          >
             <CloseButton onClose={closeSidebar} />
             <div className={styles.sidebarColumn}>
               <DetailedQuestionSidebar question={data} />

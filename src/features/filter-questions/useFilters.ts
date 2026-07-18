@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
-import { COMPLEXITY_FILTERS } from "@/shared/constants/constants";
+import { COMPLEXITY_FILTERS } from "./config/constants";
 
 export const useFilters = () => {
 const [searchParams, setSearchParams] = useSearchParams();

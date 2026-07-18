@@ -8,7 +8,7 @@ import {
   DEFAULT_SKILL_FILTERS,
   RATE_FILTERS,
   STATUS_FILTERS,
-} from "@/shared/constants/constants";
+} from "../config/constants";
 import { useDebounce } from "@/shared/hooks/useDebounce";
 import { useEffect, useState } from "react";
 
