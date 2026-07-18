@@ -3,16 +3,22 @@ import { useSearchParams } from "react-router-dom";
 import { COMPLEXITY_FILTERS } from "@/shared/constants/constants";
 
 export const useFilters = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const page = Number(searchParams.get("page")) || 1;
+const [searchParams, setSearchParams] = useSearchParams();
+const rawPage = Math.floor(Number(searchParams.get("page"))) || 1;
+const page = rawPage < 1 ? 1 : rawPage;
+const specialization = searchParams.get("specialization") || "";
+const skill = searchParams.get("skill") || "";
+const search = searchParams.get("search") || "";
+const validateArrayParam = (paramValue: string | null) => {
+  if (!paramValue) return [];
+  return paramValue
+    .split(",")
+    .filter((val) => val.trim() !== "" && !isNaN(Number(val)) && Number(val) > 0);
+};
 
-  const specialization = searchParams.get("specialization") || "";
-  const skill = searchParams.get("skill") || "";
-  const search = searchParams.get("search") || "";
-  const complexityParam = searchParams.get("complexity") || "";
-  const complexity = complexityParam ? complexityParam.split(",") : [];
-  const rateParam = searchParams.get("rate") || "";
-  const rate = rateParam ? rateParam.split(",") : [];
+const complexity = validateArrayParam(searchParams.get("complexity"));
+const rate = validateArrayParam(searchParams.get("rate"));
+
   const status = searchParams.get("status") || "all";
 
   const changePage = (newPage: number) => {

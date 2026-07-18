@@ -6,6 +6,7 @@ export interface QuestionParams {
   searchValue?: string;
   complexity?: number[];
   rate?: number[];
+	status?: string;
 }
 
 export interface QuestionResponse {

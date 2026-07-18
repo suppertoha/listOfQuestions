@@ -19,7 +19,7 @@ export const QuestionsBrowser = ({
   isMobile,
   openSidebar,
 }: QuestionsBrowserProps) => {
-  const { specialization, skill, search, complexity, rate, page, changePage } =
+  const { specialization, skill, search, complexity, rate, page, changePage, status } =
     useFilters();
 
   const { data: specializationsResponse } = useFetchSpecializationsQuery();
@@ -32,6 +32,7 @@ export const QuestionsBrowser = ({
     rate: rate.length > 0 ? rate.map(Number) : undefined,
     page,
     limit: 10,
+		status: status !== "all" ? status : undefined, 
   });
 
   useEffect(() => {
