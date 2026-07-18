@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   useFetchQuestionsQuery,
@@ -30,6 +30,7 @@ const buildListParams = (searchParams: URLSearchParams): QuestionParams => {
 
 export const useQuestionNavigation = (questionId: number) => {
   const navigate = useNavigate();
+  const [isNavigating, setIsNavigating] = useState(false);
   const [searchParams] = useSearchParams();
   const listParams = useMemo(
     () => buildListParams(searchParams),
@@ -45,8 +46,7 @@ export const useQuestionNavigation = (questionId: number) => {
   const isOnCurrentPage = currentIndex >= 0;
 
   const hasPrev =
-    isOnCurrentPage &&
-    (currentIndex > 0 || (listParams.page ?? 1) > 1);
+    isOnCurrentPage && (currentIndex > 0 || (listParams.page ?? 1) > 1);
 
   const hasNext =
     isOnCurrentPage &&
@@ -72,7 +72,7 @@ export const useQuestionNavigation = (questionId: number) => {
   );
 
   const goPrev = useCallback(async () => {
-    if (!hasPrev) return;
+    if (!hasPrev || isNavigating) return;
 
     if (currentIndex > 0) {
       navigateToQuestion(questions[currentIndex - 1].id);
@@ -80,30 +80,46 @@ export const useQuestionNavigation = (questionId: number) => {
     }
 
     const currentPage = listParams.page ?? 1;
-
     if (currentPage > 1) {
       const prevPage = currentPage - 1;
-      const result = await fetchQuestions({
-        ...listParams,
-        page: prevPage,
-      }).unwrap();
-      const prevQuestions = result.data;
 
-      if (prevQuestions.length > 0) {
-        navigateToQuestion(prevQuestions[prevQuestions.length - 1].id, prevPage);
+      try {
+        setIsNavigating(true);
+
+        const result = await fetchQuestions({
+          ...listParams,
+          page: prevPage,
+        }).unwrap();
+
+        const prevQuestions = result.data;
+        if (prevQuestions.length > 0) {
+          navigateToQuestion(
+            prevQuestions[prevQuestions.length - 1].id,
+            prevPage,
+          );
+        }
+      } catch (err) {
+        console.error("Ошибка при навигации:", err);
+        alert(
+          "Не удалось загрузить следующий вопрос. Проверьте интернет-соединение.",
+        );
+      } finally {
+        setIsNavigating(false);
       }
     }
   }, [
     hasPrev,
     currentIndex,
-    questions,
+    isNavigating,
     listParams,
     fetchQuestions,
+    questions,
     navigateToQuestion,
   ]);
 
   const goNext = useCallback(async () => {
-    if (!hasNext) return;
+    // ЗАЩИТА: Блокируем клик, если кнопка заблокирована или уже идет запрос
+    if (!hasNext || isNavigating) return;
 
     if (currentIndex < questions.length - 1) {
       navigateToQuestion(questions[currentIndex + 1].id);
@@ -114,19 +130,33 @@ export const useQuestionNavigation = (questionId: number) => {
 
     if (currentPage < totalPages) {
       const nextPage = currentPage + 1;
-      const result = await fetchQuestions({
-        ...listParams,
-        page: nextPage,
-      }).unwrap();
-      const nextQuestions = result.data;
 
-      if (nextQuestions.length > 0) {
-        navigateToQuestion(nextQuestions[0].id, nextPage);
+      try {
+        setIsNavigating(true);
+
+        const result = await fetchQuestions({
+          ...listParams,
+          page: nextPage,
+        }).unwrap();
+
+        const nextQuestions = result.data;
+
+        if (nextQuestions.length > 0) {
+          navigateToQuestion(nextQuestions[0].id, nextPage);
+        }
+      } catch (err) {
+        console.error("Ошибка при навигации вперёд:", err);
+        alert(
+          "Не удалось загрузить следующий вопрос. Проверьте интернет-соединение.",
+        );
+      } finally {
+        setIsNavigating(false);
       }
     }
   }, [
     hasNext,
     currentIndex,
+    isNavigating,
     questions,
     listParams,
     totalPages,
@@ -134,5 +164,5 @@ export const useQuestionNavigation = (questionId: number) => {
     navigateToQuestion,
   ]);
 
-  return { hasPrev, hasNext, goPrev, goNext };
+  return { hasPrev, hasNext, goPrev, goNext, isNavigating };
 };

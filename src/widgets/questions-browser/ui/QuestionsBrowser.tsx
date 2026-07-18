@@ -19,8 +19,16 @@ export const QuestionsBrowser = ({
   isMobile,
   openSidebar,
 }: QuestionsBrowserProps) => {
-  const { specialization, skill, search, complexity, rate, page, changePage, status } =
-    useFilters();
+  const {
+    specialization,
+    skill,
+    search,
+    complexity,
+    rate,
+    page,
+    changePage,
+    status,
+  } = useFilters();
 
   const { data: specializationsResponse } = useFetchSpecializationsQuery();
 
@@ -32,7 +40,7 @@ export const QuestionsBrowser = ({
     rate: rate.length > 0 ? rate.map(Number) : undefined,
     page,
     limit: 10,
-		status: status !== "all" ? status : undefined, 
+    status: status !== "all" ? status : undefined,
   });
 
   useEffect(() => {
@@ -43,8 +51,34 @@ export const QuestionsBrowser = ({
     return <QuestionsBrowserSkeleton isMobile={isMobile} />;
   }
 
-  if (error || !data) {
-    return <Navigate to={ROUTES.notFound} replace />;
+  if (error) {
+    if ("status" in error) {
+      if (error.status === 404) {
+        return (
+          <div className={styles.error}>
+            Ошибка 404: Специализация или вопросы не найдены.
+          </div>
+        );
+      }
+      if (error.status === 500) {
+        return (
+          <div className={styles.error}>
+            Ошибка 500: Проблема на стороне сервера. Попробуйте позже.
+          </div>
+        );
+      }
+      return (
+        <div className={styles.error}>
+          Произошла ошибка при загрузке: {error.status}
+        </div>
+      );
+    }
+
+    return (
+      <div className={styles.error}>
+        Сетевая ошибка. Проверьте подключение к интернету.
+      </div>
+    );
   }
 
   const questions = data.data;
@@ -74,11 +108,7 @@ export const QuestionsBrowser = ({
         )}
       </div>
 
-      {isEmpty ? (
-        <FiltersReset />
-      ) : (
-        <QuestionList questions={questions} />
-      )}
+      {isEmpty ? <FiltersReset /> : <QuestionList questions={questions} />}
 
       {!isEmpty && (
         <Pagination
